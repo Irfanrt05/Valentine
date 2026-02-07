@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Rose Gold Love | 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:italic,wght@700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --soft-pink: #ffdae0;
+        --deep-rose: #ff4d6d;
+        --gold-glow: #ffb7c5;
+        --white-glass: rgba(255, 255, 255, 0.7);
+      }
+
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: #fff5f7;
+        color: #4a4a4a;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* Luxury Gradient & Image Background - FIXED */
+      .bg-luxury {
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        /* Urutan: Gradien transparan di atas, gambar di paling bawah */
+        background:
+          radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 237, 240, 0.8) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 90% 90%,
+            rgba(255, 228, 233, 0.8) 0%,
+            transparent 50%
+          ),
+          url("https://images.unsplash.com/photo-1520323232471-9f393375b928?auto=format&fit=crop&q=80");
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        /* Efek sedikit blur agar teks tetap 'pop out' */
+        filter: blur(3px) brightness(1.1);
+        transform: scale(1.1);
+      }
+
+      /* Overlay tipis agar teks lebih mudah dibaca */
+      .bg-luxury::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.2);
+        z-index: -1;
+      }
+
+      .floating-heart {
+        position: fixed;
+        font-size: 1.5rem;
+        opacity: 0.15;
+        z-index: -1;
+        animation: floatUp 15s linear infinite;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(110vh) rotate(0deg);
+        }
+        100% {
+          transform: translateY(-10vh) rotate(360deg);
+        }
+      }
+
+      /* --- NAV BAR --- */
+      .nav-container {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        padding: 3px;
+        border-radius: 2.5rem;
+        overflow: hidden;
+        background: var(--white-glass);
+        box-shadow: 0 15px 35px rgba(255, 77, 109, 0.15);
+      }
+
+      .nav-container::before {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        background: conic-gradient(
+          transparent,
+          transparent,
+          var(--deep-rose),
+          transparent
+        );
+        animation: rotateNeon 3s linear infinite;
+        top: -25%;
+        left: -25%;
+      }
+
+      @keyframes rotateNeon {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .nav-content {
+        position: relative;
+        display: flex;
+        gap: 4px;
+        padding: 5px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(15px);
+        border-radius: 2.4rem;
+        z-index: 1;
+      }
+
+      .nav-item {
+        padding: 10px 18px;
+        border-radius: 2rem;
+        font-size: 9px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: #d1a3ac;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+
+      .nav-active {
+        background: #fff;
+        color: var(--deep-rose);
+        box-shadow: 0 5px 15px rgba(255, 77, 109, 0.2);
+        transform: scale(1.05);
+      }
+
+      /* --- 3D PLAYLIST CARD --- */
+      #p2 {
+        perspective: 1200px;
+      }
+      /* REVISI PLAYER CARD LEBIH PREMIUM */
+      .player-card {
+        background: rgba(255, 255, 255, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(20px);
+        border-radius: 4rem; /* Lebih melengkung */
+        padding: 3rem 2rem;
+        width: 100%;
+        max-width: 350px;
+        box-shadow:
+          0 20px 40px rgba(255, 183, 197, 0.3),
+          inset 0 0 20px rgba(255, 255, 255, 0.5);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* EFEK VINYL RECORD */
+      .album-art-wrap {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        margin: 0 auto 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .vinyl-disk {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #282828;
+        background: repeating-radial-gradient(
+          #282828,
+          #282828 2px,
+          #333 3px,
+          #282828 4px
+        );
+        border-radius: 50%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        z-index: 1;
+        animation: rotateAlbum 6s linear infinite;
+        animation-play-state: paused;
+      }
+
+      .album-art-wrap img {
+        width: 65%;
+        height: 65%;
+        object-fit: cover;
+        border-radius: 50%;
+        z-index: 2;
+        border: 4px solid #fff;
+        animation: rotateAlbum 6s linear infinite;
+        animation-play-state: paused;
+      }
+
+      /* GLOW PADA VISUALIZER */
+      .v-bar {
+        width: 6px;
+        background: linear-gradient(to top, #ffb7c5, #ff4d6d);
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(255, 77, 109, 0.3);
+      }
+
+      @keyframes v-dance {
+        0% {
+          height: 10px;
+        }
+        100% {
+          height: 35px;
+          box-shadow: 0 0 10px var(--gold-glow);
+        }
+      }
+
+      /* --- PREMIUM LETTER DESIGN (Section P4) --- */
+      .premium-letter {
+        background: #ffffff;
+        background-image: radial-gradient(#fff0f3 1.5px, transparent 1.5px);
+        background-size: 24px 24px;
+        border-radius: 20px;
+        position: relative;
+        padding: 4rem 2.5rem;
+        max-width: 360px;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(255, 183, 197, 0.2);
+        border: 8px solid white;
+        outline: 1px solid #ffe4e9;
+      }
+
+      .premium-letter::after {
+        content: "";
+        position: absolute;
+        inset: -5px;
+        border: 2px dashed #ffcad4;
+        border-radius: 22px;
+        pointer-events: none;
+        opacity: 0.6;
+      }
+
+      .washi-tape {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+        width: 100px;
+        height: 30px;
+        background: rgba(255, 183, 197, 0.4);
+        backdrop-filter: blur(2px);
+        border-left: 5px dotted rgba(255, 255, 255, 0.5);
+        border-right: 5px dotted rgba(255, 255, 255, 0.5);
+        z-index: 20;
+      }
+
+      .wax-seal {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #ff4d6d, #e63946);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        box-shadow:
+          2px 4px 10px rgba(0, 0, 0, 0.15),
+          inset 0 0 10px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        bottom: 25px;
+        right: 25px;
+        transform: rotate(-15deg);
+        z-index: 10;
+      }
+
+      .floral-corner {
+        position: absolute;
+        font-size: 2.8rem;
+        z-index: 5;
+        filter: drop-shadow(0 2px 5px rgba(255, 183, 197, 0.3));
+        animation: sway 4s ease-in-out infinite alternate;
+      }
+
+      @keyframes sway {
+        from {
+          transform: rotate(-5deg) scale(1);
+        }
+        to {
+          transform: rotate(10deg) scale(1.1);
+        }
+      }
+
+      /* --- PAGES --- */
+      .page {
+        display: none;
+        min-height: 100vh;
+        padding: 2rem 1.5rem 8rem 1.5rem;
+        opacity: 0;
+      }
+      .active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        animation: pageIn 0.8s forwards;
+      }
+
+      @keyframes pageIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .luxury-bento {
+        background: white;
+        border-radius: 2rem;
+        border: 1px solid rgba(255, 77, 109, 0.1);
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(255, 77, 109, 0.05);
+      }
+    </style>
+  </head>
+  <body onclick="createSparkle(event)">
+    <audio id="mySong" loop>
+      <source src="lagu1.mp3" type="audio/mpeg" />
+    </audio>
+
+    <div class="bg-luxury"></div>
+
+    <div class="floating-heart" style="left: 10%; animation-delay: 0s">🌸</div>
+    <div class="floating-heart" style="left: 30%; animation-delay: 2s">🎀</div>
+    <div class="floating-heart" style="left: 70%; animation-delay: 4s">✨</div>
+    <div class="floating-heart" style="left: 90%; animation-delay: 1s">💗</div>
+
+    <main id="content">
+      <section id="p1" class="page active">
+        <div class="text-center mb-10">
+          <span
+            class="px-4 py-1 rounded-full bg-white text-[10px] font-bold text-rose-400 uppercase tracking-widest shadow-sm"
+            >Happy Valentine Day</span
+          >
+        </div>
+        <div class="relative cursor-pointer group" onclick="openEnvelope()">
+          <div
+            id="envelope"
+            class="w-72 h-44 bg-white rounded-[2.5rem] shadow-2xl flex items-center justify-center transition-all duration-500 border border-rose-50 hover:scale-105"
+          >
+            <div class="text-center">
+              <div class="text-5xl mb-2">🎀</div>
+              <p
+                class="text-[10px] font-extrabold text-rose-300 uppercase tracking-[0.3em]"
+              >
+                Klik dlu dong ada hadiahnya
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="p2" class="page">
+        <div class="player-card" id="tiltCard">
+          <audio id="vibeSong" preload="auto" loop>
+            <source src="lagu1.mp3" type="audio/mpeg" />
+          </audio>
+
+          <div class="album-art-wrap">
+            <div class="vinyl-disk" id="vinylDisk"></div>
+            <div
+              class="absolute -inset-6 bg-rose-200/30 blur-3xl rounded-full"
+            ></div>
+            <img src="gambar1.png" alt="Luxe Art" id="albumImg" />
+          </div>
+
+          <div class="mb-6">
+            <h3 class="font-serif italic text-3xl text-gray-800 tracking-tight">
+              Romantic Vibe
+            </h3>
+            <div class="flex items-center justify-center gap-2 mt-2">
+              <span class="w-8 h-[1px] bg-rose-300"></span>
+              <p
+                class="text-[10px] font-bold text-rose-400 uppercase tracking-[0.2em]"
+              >
+                Special for Fii
+              </p>
+              <span class="w-8 h-[1px] bg-rose-300"></span>
+            </div>
+          </div>
+
+          <div class="visualizer-container">
+            <div class="v-bar" style="animation-delay: 0.1s"></div>
+            <div class="v-bar" style="animation-delay: 0.3s"></div>
+            <div class="v-bar" style="animation-delay: 0.5s"></div>
+            <div class="v-bar" style="animation-delay: 0.2s"></div>
+            <div class="v-bar" style="animation-delay: 0.4s"></div>
+            <div class="v-bar" style="animation-delay: 0.6s"></div>
+          </div>
+
+          <div class="flex justify-center gap-10 items-center mb-8">
+            <button
+              class="text-rose-300 hover:text-rose-500 transition-colors text-xl"
+            >
+              ⏮
+            </button>
+            <button
+              id="playBtn"
+              onclick="toggleVibe()"
+              class="w-16 h-16 bg-white rounded-full shadow-lg shadow-rose-100 flex items-center justify-center text-rose-500 text-2xl hover:scale-110 transition-transform"
+            >
+              ▶
+            </button>
+            <button
+              class="text-rose-300 hover:text-rose-500 transition-colors text-xl"
+            >
+              ⏭
+            </button>
+          </div>
+
+          <div class="px-4">
+            <div
+              class="flex justify-between text-[8px] font-bold text-rose-300 uppercase mb-2 tracking-widest"
+            >
+              <span>Soft</span>
+              <span>Loud</span>
+            </div>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value="0.7"
+              oninput="setVolume(this.value)"
+              class="w-full accent-rose-400 h-1 bg-rose-100 rounded-lg appearance-none cursor-pointer"
+            />
+          </div>
+        </div>
+      </section>
+      <section id="p3" class="page">
+        <div class="grid grid-cols-2 gap-4 w-full max-w-sm">
+          <div class="luxury-bento col-span-2 relative">
+            <img src="gambar3.png" class="w-full h-64 object-cover" />
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-rose-200/60 to-transparent"
+            ></div>
+          </div>
+          <div class="luxury-bento bg-rose-50 p-6 flex flex-col justify-center">
+            <h5
+              class="text-[10px] font-black uppercase text-rose-400 tracking-tighter"
+            >
+              Status Foto
+            </h5>
+            <p
+              class="text-lg font-serif italic text-rose-900 leading-tight mt-1"
+            >
+              Masa masa yang lalu.
+            </p>
+          </div>
+          <div class="luxury-bento">
+            <img src="gambar2.png" class="w-full h-full object-cover" />
+          </div>
+        </div>
+      </section>
+
+      <section id="p4" class="page">
+        <div class="premium-letter">
+          <div class="washi-tape"></div>
+
+          <span class="floral-corner -top-6 -left-4" style="animation-delay: 0s"
+            >🌸</span
+          >
+          <span
+            class="floral-corner -top-8 -right-4 text-2xl opacity-70"
+            style="animation-delay: 1s"
+            >✨</span
+          >
+          <span
+            class="floral-corner -bottom-8 -left-6 text-3xl opacity-60"
+            style="animation-delay: 1.5s"
+            >🤍</span
+          >
+          <span
+            class="floral-corner -bottom-4 -right-2 text-4xl"
+            style="animation-delay: 0.5s"
+            >🌷</span
+          >
+
+          <div class="relative z-10">
+            <div class="flex justify-between items-start mb-10">
+              <div
+                class="w-10 h-10 bg-rose-50 rounded-full flex items-center justify-center shadow-inner"
+              >
+                <span class="text-xl">🕊️</span>
+              </div>
+              <div class="text-right">
+                <p
+                  class="text-[9px] font-black uppercase tracking-[0.3em] text-rose-300"
+                >
+                  Private Note
+                </p>
+                <p class="text-[11px] font-serif italic text-gray-400">
+                  Februari, 2026
+                </p>
+              </div>
+            </div>
+
+            <h2
+              class="text-3xl font-serif italic text-gray-800 leading-tight mb-8"
+            >
+              Hay
+              <span class="text-rose-400 relative"
+                >Fii,
+                <svg
+                  class="absolute -bottom-2 left-0 w-full"
+                  height="6"
+                  viewBox="0 0 100 6"
+                  fill="none"
+                >
+                  <path
+                    d="M1 4.5C20 1 40 1 99 4.5"
+                    stroke="#ffb7c5"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </span>
+            </h2>
+
+            <div
+              class="space-y-5 text-[15px] text-gray-600 leading-relaxed font-medium"
+            >
+              <p>
+                Dihari valentine special edition ini, aku cuma mau bilang terima
+                kasih sudah jadi teman baik untuk sabun selama ini. yang
+                menemani setiap langkah menuju
+                <span class="italic text-rose-400 font-semibold"
+                  >summit gunung.</span
+                >
+                Semoga kmu dapat menemukan sabun baru di kehidupan kamu disana.
+              </p>
+
+              <p>
+                The most beautiful thing in this world is memories, because
+                there a person will be eternal.
+              </p>
+
+              <div class="py-4 flex items-center gap-3">
+                <div
+                  class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-rose-200 to-transparent"
+                ></div>
+                <span class="text-rose-400 text-xs">✨</span>
+                <div
+                  class="h-[1px] flex-1 bg-gradient-to-r from-transparent via-rose-200 to-transparent"
+                ></div>
+              </div>
+
+              <p
+                class="text-center text-rose-500 font-bold uppercase tracking-widest text-[11px] animate-pulse"
+              >
+                UNTUK FII. 🎀
+              </p>
+            </div>
+
+            <div class="mt-12 pt-6 flex items-center justify-between">
+              <div>
+                <p
+                  class="text-[9px] font-black uppercase tracking-widest text-rose-300"
+                >
+                  From a friend,
+                </p>
+                <p class="text-2xl font-serif italic text-gray-700 mt-1">
+                  Sabun Colek.
+                </p>
+              </div>
+              <div
+                class="w-12 h-14 bg-white shadow-md border p-1 rotate-12 transform hover:rotate-0 transition-transform"
+              >
+                <div
+                  class="w-full h-10 bg-rose-100 flex items-center justify-center text-xs"
+                >
+                  📸
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wax-seal">
+            <span class="text-xl shadow-sm">❤</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="p5" class="page">
+        <div class="text-center max-w-xs mx-auto">
+          <div class="mb-8 relative">
+            <div
+              class="w-40 h-40 mx-auto p-2 bg-white rounded-full shadow-2xl rotate-3"
+            >
+              <img
+                src="https://images.unsplash.com/photo-1518893063132-36e46dbe2428?auto=format&fit=crop&q=80"
+                alt="Us"
+                class="w-full h-full object-cover rounded-full"
+              />
+            </div>
+          </div>
+          <div class="mb-10 px-4">
+            <h2 class="text-3xl font-serif italic text-gray-800 mb-2">
+              Aku ada pertanyaan...
+            </h2>
+            <p class="text-sm text-gray-500 leading-relaxed font-medium">
+              Apakah Sabun ini baik hati, penyabar, setia, lucu, dan ga
+              ngeselin?
+            </p>
+          </div>
+          <div class="flex flex-col gap-3 px-6">
+            <button
+              onclick="celebrate()"
+              class="py-4 bg-rose-500 text-white rounded-2xl font-bold text-xs uppercase tracking-[0.2em] shadow-lg active:scale-95 transition-all"
+            >
+              iyaa, kamu sangat baik dan semuanya✨
+            </button>
+            <button
+              id="moveBtn"
+              onmouseover="moveBtn()"
+              class="py-3 bg-transparent border border-rose-200 rounded-2xl text-[10px] font-bold text-rose-300 uppercase tracking-widest"
+            >
+              GAK SAMA SEKALI
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="nav-container">
+      <nav class="nav-content">
+        <button onclick="nextPage(1)" class="nav-item nav-active">Home</button>
+        <button onclick="nextPage(2)" class="nav-item">Vibe</button>
+        <button onclick="nextPage(3)" class="nav-item">Dump</button>
+        <button onclick="nextPage(4)" class="nav-item">Note</button>
+        <button onclick="nextPage(5)" class="nav-item">Final</button>
+      </nav>
+    </div>
+
+    <div
+      id="letterModal"
+      class="fixed inset-0 z-[2000] flex items-center justify-center p-6 hidden opacity-0 transition-all duration-500"
+    >
+      <div
+        class="absolute inset-0 bg-rose-50/80 backdrop-blur-md"
+        onclick="closeEnvelope()"
+      ></div>
+      <div
+        class="player-card bg-white z-10 scale-90 transition-transform duration-500"
+        id="modalInner"
+      >
+        <span class="text-4xl">💌</span>
+        <h3 class="text-2xl font-serif italic mt-4 mb-2">Hello, Fii.</h3>
+        <p
+          class="text-[10px] text-gray-400 mb-8 uppercase tracking-widest font-bold"
+        >
+          Aku ada sesuatu untukmu
+        </p>
+        <button
+          onclick="nextPage(2)"
+          class="w-full py-4 bg-rose-400 text-white rounded-2xl font-bold text-[10px] uppercase tracking-widest shadow-xl shadow-rose-100"
+        >
+          Tekan ini untuk melihatnya
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // Inisialisasi Audio
+      const vibeSong = document.getElementById("vibeSong");
+      const playBtn = document.getElementById("playBtn");
+      const bars = document.querySelectorAll(".v-bar");
+      let isPlaying = false;
+
+      // Matikan animasi visualizer di awal
+      bars.forEach((b) => (b.style.animationPlayState = "paused"));
+
+      function toggleVibe() {
+        const vinyl = document.getElementById("vinylDisk");
+        const albumImg = document.getElementById("albumImg");
+
+        if (isPlaying) {
+          vibeSong.pause();
+          playBtn.innerHTML = "▶";
+          bars.forEach((b) => (b.style.animationPlayState = "paused"));
+          vinyl.style.animationPlayState = "paused";
+          albumImg.style.animationPlayState = "paused";
+        } else {
+          vibeSong.play().catch((e) => console.error("Error:", e));
+          playBtn.innerHTML = "⏸";
+          bars.forEach((b) => (b.style.animationPlayState = "running"));
+          vinyl.style.animationPlayState = "running";
+          albumImg.style.animationPlayState = "running";
+        }
+        isPlaying = !isPlaying;
+      }
+
+      function setVolume(val) {
+        vibeSong.volume = val;
+      }
+
+      function openEnvelope() {
+        const modal = document.getElementById("letterModal");
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.add("opacity-100");
+          document.getElementById("modalInner").classList.add("scale-100");
+        }, 50);
+      }
+      function openEnvelope() {
+        const modal = document.getElementById("letterModal");
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.add("opacity-100");
+          document.getElementById("modalInner").classList.add("scale-100");
+        }, 50);
+      }
+
+      function closeEnvelope() {
+        const modal = document.getElementById("letterModal");
+        modal.classList.remove("opacity-100");
+        document.getElementById("modalInner").classList.remove("scale-100");
+        setTimeout(() => modal.classList.add("hidden"), 500);
+      }
+
+      function nextPage(num) {
+        closeEnvelope();
+        const pages = document.querySelectorAll(".page");
+        const navs = document.querySelectorAll(".nav-item");
+        pages.forEach((p) => p.classList.remove("active"));
+        navs.forEach((n) => n.classList.remove("nav-active"));
+
+        setTimeout(() => {
+          document.getElementById("p" + num).classList.add("active");
+          navs[num - 1].classList.add("nav-active");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 300);
+      }
+
+      const card = document.getElementById("tiltCard");
+      const p2 = document.getElementById("p2");
+      p2.addEventListener("mousemove", (e) => {
+        if (!p2.classList.contains("active")) return;
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = (centerY - y) / 10;
+        const rotateY = (x - centerX) / 10;
+        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+
+      p2.addEventListener("mouseleave", () => {
+        card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+      });
+
+      function moveBtn() {
+        const btn = document.getElementById("moveBtn");
+        btn.style.position = "fixed";
+        btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+        btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+      }
+
+      function celebrate() {
+        alert("Haha, Terima kasih sudah menjawab ✨");
+      }
+
+      function createSparkle(e) {
+        const symbols = ["💖", "✨", "🌸", "☁️"];
+        const sparkle = document.createElement("div");
+        sparkle.style.position = "absolute";
+        sparkle.style.left = e.pageX + "px";
+        sparkle.style.top = e.pageY + "px";
+        sparkle.style.fontSize = "24px";
+        sparkle.style.pointerEvents = "none";
+        sparkle.style.zIndex = "3000";
+        sparkle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        document.body.appendChild(sparkle);
+
+        sparkle.animate(
+          [
+            { transform: "translateY(0) scale(1) rotate(0deg)", opacity: 1 },
+            {
+              transform: `translate(${(Math.random() - 0.5) * 200}px, -150px) scale(0) rotate(360deg)`,
+              opacity: 0,
+            },
+          ],
+          { duration: 1000, easing: "ease-out" },
+        ).onfinish = () => sparkle.remove();
+      }
+    </script>
+  </body>
+</html>
